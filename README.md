@@ -4239,25 +4239,37 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOayYEJSyLHLOX25WbnoZgtL006XdmN6T5N0dlUnp7kI
 1.master
 
 a.java & mavne need install
+
 b.setup environmemnt variables
+
 c.install jenkins in master machine
+
 d.provide the sudo permission to the jenkins user
+
 e. passwordauthentication should be enabled
+
 f. ssh-keygen -t ed25519 --> need to generate the keys in master
+
 g. copy the public/private keys to Node machine
 
 NOTE:: if authorized_keys file is there or not , if not there 
+
 please be create both the machine
 
 2.Node
 
 a.java & mavne need install
+
 b.setup environmemnt variables
+
 c. need to create use as node-->adduser node
+
 c.provide the sudo permission to the node user
+
 visudo 
 
 node ALL-(AAL:ALL) NOPASSWD:ALL
+
 e. passwordauthentication should be enabled
 
 if keys are copied correctly commenucation will be happend 
@@ -4301,10 +4313,12 @@ Modules: Pre-built commands that Ansible can run on target systems to accomplish
 
 3 linux ubuntu machines
 AWS_Ubuntu 24
-1)	AWS free tier 
+1)	AWS free tier
+
 a)ACS   ----Ansible control server
 
 b)Node1
+
 c)Node2
 
 
@@ -4331,6 +4345,7 @@ NOTE1 & NODE2 Setup::steps
 
 we can search in google ansible playbook
 https://docs.ansible.com/ansible/latest/user_guide/playbooks.html
+
 https://docs.ansible.com/ansible/latest/user_guide/playbooks_intro.html#basics
 
 Python Install link::
