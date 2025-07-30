@@ -5276,10 +5276,6 @@ When condition is always used bottom of the script and using scrips we can able 
 
 
 
-27/03/2025::
-==============
-
-
 In Ansible, variables are used to store values that can be referenced and used throughout your playbooks, roles, and tasks. This allows for dynamic, reusable, and flexible automation. Here’s a basic breakdown of how Ansible variables work and the different ways you can define and use them:
 
 
