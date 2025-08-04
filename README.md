@@ -5374,3 +5374,161 @@ https://docs.ansible.com/ansible/latest/collections/ansible/builtin/debug_module
 
 ![image](https://github.com/user-attachments/assets/7d18a6e5-a53b-436b-bf26-dbe1db0e89af)
 
+
+
+
+
+01/08/2025::
+==============
+
+Ansible Roles::
+===================
+
+
+![image](https://github.com/user-attachments/assets/99525357-1651-471a-b737-df79823dc24f)
+
+
+Ansible roles are a way of organizing playbooks and tasks in a modular, reusable, and maintainable structure. They allow you to break down complex playbooks into smaller, focused units of functionality that can be easily shared and reused across different projects. Here's a more detailed look at Ansible roles:
+
+https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_reuse_roles.html
+
+1.Written ansible in a reusable fashion
+2.How do I use someone else’s work
+3.Ansible galaxy is a place where we can find reusable roles
+
+https://galaxy.ansible.com/
+
+4.Which we can use in your script
+
+
+
+install roles
+
+ > Ansible-galaxy install <rolename>
+
+ >ansible-galaxy install my_role
+
+create my own role::
+
+> ansible-galaxy init <rolename>
+
+>ansible-galaxy init my_role
+
+
+
+Structure of Ansible Roles::
+===================
+
+my_role/
+├── defaults/
+│   └── main.yml            # Default variables
+├── files/
+│   └── somefile            # Files to be copied to the target
+├── handlers/
+│   └── main.yml            # Handlers (usually for service restarts)
+├── meta/
+│   └── main.yml            # Metadata about the role
+├── tasks/
+│   └── main.yml            # The main tasks (this file includes other task files if needed)
+├── templates/
+│   └── config.j2           # Jinja2 templates for dynamic file creation
+├── tests/
+│   └── test.yml            # Test playbooks to verify the role works
+├── vars/
+│   └── main.yml            # Custom variables
+
+
+Using Roles in Playbooks
+Once you've defined a role, you can use it in your playbook like this:
+
+---
+- name: Example Playbook using roles
+  hosts: all
+  become: yes
+  roles:
+    - my_role
+
+Benefits of Using Roles
+Reusability: Roles can be reused across different playbooks and projects.
+
+Modularity: Roles allow you to organize your playbook into smaller, manageable parts.
+
+Clarity: Each role focuses on a specific task or function, making your playbooks more understandable.
+
+Example Role: Installing Tomcat
+
+https://galaxy.ansible.com/ui/standalone/roles/robertdebock/tomcat/install/
+
+
+Create my own role
+
+> Ansible-galaxy init rolename
+
+![image](https://github.com/user-attachments/assets/af275783-63b6-40ab-a319-645db283a40f)
+
+![image](https://github.com/user-attachments/assets/34cfe34b-b8bc-4026-9014-0c07c952c3af)
+
+Install tomcat
+
+If you're looking to install or use an Ansible role for Tomcat from Ansible Galaxy, you can search for available roles and collections related to Tomcat. Here's how you can find and use a role related to Tomcat from Galaxy.
+1.	Search for a Tomcat Role
+
+https://galaxy.ansible.com/
+
+To search for a role related to Tomcat on Ansible Galaxy, you can use the following command:
+bash
+Copy
+ansible-galaxy search tomcat
+This will return a list of roles related to Tomcat that you can install and use.
+2. Install a Tomcat Role
+Once you’ve found a suitable role for Tomcat, you can install it using the ansible-galaxy install command.
+For example, if you find a role called geerlingguy.tomcat, you can install it by running:
+bash
+Copy
+> ansible-galaxy install geerlingguy.tomcat
+This will download and install the role into your ~/.ansible/roles/ directory (or the path defined in your ansible.cfg file).
+3. Use the Installed Tomcat Role in Your Playbook
+After installing the role, you can use it in your playbook. Here’s an example of a simple playbook that installs and configures Tomcat:
+yaml
+Copy
+
+Deploywar.yml::
+=============
+
+---
+- hosts: localhost
+  become: yes
+  roles:
+  - robertdebock.java
+  - robertdebock.tomcat
+ 
+  > ansible-playbook -i hosts Deploywar.yml
+  
+
+![image](https://github.com/user-attachments/assets/306fd1fc-8c51-40f7-81b6-41a44e6ee915)
+
+  
+This will use the geerlingguy.tomcat role to set up Tomcat on your webservers hosts.
+
+https://galaxy.ansible.com/robertdebock/tomcat
+
+![image](https://github.com/user-attachments/assets/29cfc5e4-b8e6-494b-a462-d8a11699df12)
+
+Deploywar.yml
+
+![image](https://github.com/user-attachments/assets/d7f4d510-bee2-4d32-ad56-7906a8574e93)
+
+![image](https://github.com/user-attachments/assets/adad9ea6-ed52-457e-a9eb-adb2d19ad026)
+
+![image](https://github.com/user-attachments/assets/a4c880aa-f378-4085-9122-3ef93a25e09a)
+
+
+By default  tomcat run port 8080
+http://18.236.181.244:8080/
+http://34.216.173.44:8080/manager/html
+
+![image](https://github.com/user-attachments/assets/fa5faaeb-ec9e-43f2-9184-7bf46f1433c4)
+
+
+Most of the work is done 
+Where is my war file
