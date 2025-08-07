@@ -5949,4 +5949,139 @@ Destination bucket:: should be give AWS bucket name
 Should be enabled Manage artifacts options
  
 
+
+
+ 06/08/2025::
+ ============
+
+ Docker Introductions::
+=================
+
+Docker is an opensource & Applicatuions level virtualization technology and it's called containirazition.
+
+Docker is an open-source platform that automates the deployment, scaling, and management of applications in lightweight, portable containers. Containers are isolated environments that package an application and all its dependencies (such as libraries, binaries, and configurations) to ensure it runs uniformly across different computing environments.
+
+![image](https://github.com/user-attachments/assets/c3b1350c-eb6b-44f1-94b1-0c05b65c3653)
+
+Docker is a platform and that make it easier to create, deploy, and run applications using containers. Containers are lightweight, standalone, and executable units that include everything needed to run a piece of software, including the code, runtime, libraries, and system tools.
+
+container ::
+==============
+1.container is an insolation area of executuions of your applications
+ OR
+ instance of images are called containers
+2.Containers are created from “images”
+3. Containers are the core of Docker. They are lightweight, portable, and isolated environments where applications run.
+  Docker is run your software packages /Applications  in containers called containarizations.
+
+4. if you build a docker container for your application called containerization
+5. containers have it’s own boundaries  
+
+who will create containers?
+Ans --docker images are created the containers
+
+ Docker Images:
+ ===============
+
+ docker image is a package with all dependencies and the necessary 
+information to create the container and docker image derived from multiple base images.
+
+An image is a snapshot of a container, a blueprint that defines what the container will contain and how it will behave when run. It consists of an application and its dependencies. Docker images are built using a Dockerfile
+
+Docker Registry::
+====================
+
+A Docker Registry is a system for storing and distributing Docker images. It is a centralized location where Docker images can be uploaded (pushed), stored, and downloaded (pulled) by users and applications. Docker images are the building blocks of containers, and registries provide a way to manage, version, and share these images across different environments.
+
+Default registry :: https://hub.docker.com/
+
+Physical & Virtual & Hypervisors/VMwares::
+=============================================
+
+1.tomcat & nodejs containers have it’s own process tree,own files systems,own network interfaces own storage,ram…etc
+2.when you want to give application to your team/testers  docker is the best choice and when you want give system to your team/ testers VMwares are best choice.
+3.application level virtulization docker is the best choice and OS level virtulization VMwares are best choice
+4.individually scale the your application very easy in docker
+
+![image](https://github.com/user-attachments/assets/c3b1350c-eb6b-44f1-94b1-0c05b65c3653)
+
+
+Example:: For festival season In your organization leave management application multiple employees are applied leaves at the same time in that scenario docker is very easy to scale the one more application but physically it’s very difficult so docker is the best choice
+
+
+![image](https://github.com/user-attachments/assets/c3b1350c-eb6b-44f1-94b1-0c05b65c3653)
+
+
+
+
+07/08/2025::
+=================
+
+
+Docker High Level Client -Server Architecture::
+==================================
+
+
+<img width="1700" height="665" alt="image" src="https://github.com/user-attachments/assets/0c95b9d4-34ac-4795-aa30-addb1952b6a3" />
+
+
+
+Docker's high-level architecture revolves around several components that work together to provide containerization and isolation for applications
+
+
+Docker Client (CLI)::
+=================
+
+The Docker Client is the primary interface for interacting with Docker. It can be a command-line interface (CLI), like the docker command, or a graphical interface (GUI) in some tools.
+
+It allows users to interact with Docker's features, such as building containers, running containers, and managing containers and images.
+
+It sends requests to the Docker Daemon to execute commands.
+
+Docker Daemon (Dockerd)::
+====================
+
+The Docker Daemon (also known as dockerd) is the core component of Docker. It runs in the background on the host system.
+
+The daemon is responsible for managing Docker containers, images, networks, and volumes. It listens for Docker API requests and handles container lifecycle operations such as starting, stopping, and building containers.
+
+The Docker Daemon can communicate with multiple Docker clients, allowing for distributed management of containers.
+
+Flow:
+============
+1.The Docker Client sends a command to the Docker Daemon.
+
+2.The Docker Daemon interacts with containers, images, and storage volumes.
+
+3.The Docker Daemon can pull images from a Docker Registry.
+
+4.The Docker Daemon runs containers based on the images and handles networking and storage.
+
+Docker commands::
+====================
+
+ >docker pull <imagename>
+
+ >docker pull hello-world
+
+ >docker images   ----used to display the all images
+
+ > docker image ls ----used to display the all images
  
+ >docker run ---used to build the images and create the container
+
+Create the Jenkins container::
+=================================
+
+>docker run -d -p 8080:8080 jenkins/jenkins:jdk21
+
+
+http://35.155.150.89:8080/
+
+
+![image](https://github.com/user-attachments/assets/30576b75-b3ee-47e1-97f0-f535c46ff015)
+
+
+>docker ps
+
+above command is used to verify the how many containers are running
