@@ -6973,3 +6973,95 @@ Application up & running::
 =============================
 
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/baaf82db-c008-400e-9f18-83732e2ece37" />
+
+
+
+
+12/08/2025::
+==================
+
+Network Types in Docker:
+============================
+
+•	bridge: Default network for containers on the same host.
+
+•	host: The container shares the host’s networking stack.
+
+•	overlay: Used for multi-host networking (requires Docker Swarm).
+
+•	none: No network connectivity is assigned to the container.
+
+•	>bridge network is used for single node communication
+
+•	>overlay network is used for multi node communication
+
+•	---Kubernetes/swarm are used to communicate 2 containers in docker that’s like orchestration
+macvlan network:: may be used to give containers across different hosts unique, routable IP addresses in a larger network
+IPVLAN:Containers share the host’s MAC address but have individual IP addresses.
+
+create my own network ::
+=========================
+> docker network create my_custom_network
+
+![image](https://github.com/user-attachments/assets/43dbaed8-eb30-45ad-8df3-6cd9f1a3d063)
+
+Created my own network - my_custom_network
+![image](https://github.com/user-attachments/assets/a2136223-4a9a-48bc-b884-3e64a57268d5)
+
+Run Containers on the Custom Network::
+=================
+>docker run -d --name container1 --network my_custom_network nginx
+
+![image](https://github.com/user-attachments/assets/0f65c683-0ef5-4415-9413-41a46735a633)
+
+>docker run -d --name container2 --network my_custom_network redis
+
+
+![image](https://github.com/user-attachments/assets/0a4811c8-24cf-400a-93f9-e72196d504a5)
+
+In this example:
+•	container1 will run an Nginx container.
+
+•	container2 will run a Redis container.
+
+Both containers are connected to the my_custom_network.
+
+Inspect the Network::
+=================
+To view detailed information about a network (like connected containers and settings), use the docker network inspect command:
+>docker ps
+
+>docker network ls
+
+> docker network inspect my_custom_network
+
+![image](https://github.com/user-attachments/assets/367d1d82-51e3-43fa-88c0-5a8414c73688)
+
+Connect a Container to a Network:
+==================
+> docker network connect my_custom_network container_name
+Disconnect a Container from a Network:
+
+> docker network disconnect my_custom_network container_name
+Remove a Docker Network::
+
+>docker network rm my_custom_network
+Note that the network must be unused by any containers before it can be removed.
+
+A common use case for Docker networks is to isolate different applications or microservices, ensuring that containers in one application cannot easily communicate with containers in another. This helps you maintain security and control over how containers interact with each other.
+
+USE CASE::
+======================
+
+--default network bridge can only ping throw ip address not container name
+
+--our own network bridge(mybridge) able to ping both ip address and container name that’s advantage of network create.
+
+
+---Kubernetes/swarm are used to communicate 2 containers in docker that’s like orchestration
+
+--if you create your own bridge network the advantage is you can able to resolved the any issues using container name not only ipaddress but by default using you can able to resolved the issues by ipaddress.
+
+>bridge network is used for single node communication
+
+>overlay network is used for multi node communication
