@@ -7065,3 +7065,156 @@ USE CASE::
 >bridge network is used for single node communication
 
 >overlay network is used for multi node communication
+
+
+
+
+14/08/2025::
+================
+
+
+Docker Swarm::
+===================
+
+Docker and Docker Swarm are both tools used to manage containers, but they serve different purposes and have different features. 
+
+
+![image](https://github.com/user-attachments/assets/a7dc1fa3-6551-44cf-b954-7e411141b87e)
+
+
+Docker::
+===========
+
+Docker is a platform that allows you to create, deploy, and run applications inside containers. Containers are lightweight, portable, and ensure that the application works the same regardless of where it's deployed, making Docker a powerful tool for developing, testing, and deploying applications.
+
+
+Key Features of Docker:
+=======================
+•	Containerization: Docker encapsulates applications and their dependencies into containers, ensuring consistency across environments (e.g., development, staging, production).
+•	Images and Containers: Docker uses images to define the environment for an application. Containers are instances of those images.
+
+•	Docker Hub: Docker Hub is a cloud-based registry where you can find pre-built images or upload your own.
+
+•	Portability: Docker containers can run on any system with Docker installed, from your laptop to a cloud server.
+
+•	Isolation: Containers are isolated from the host system, so they don’t interfere with other processes or systems.
+
+Common Docker Commands:
+===================
+•	Build an Image: docker build -t my-image .
+
+•	Run a Container: docker run -d --name my-container my-image
+
+•	List Containers: docker ps
+
+•	Stop a Container: docker stop my-container
+
+•	Remove a Container: docker rm my-container
+
+•	List Images: docker images
+
+Docker Swarm::
+==================
+
+Docker Swarm is a clustering and orchestration tool for Docker containers. It allows you to deploy and manage multiple containers across multiple Docker hosts (machines), forming a swarm. This means that you can treat a collection of Docker hosts as a single virtual host and manage them as one.
+Docker Swarm makes it easier to scale, deploy, and maintain containerized applications in production environments. It provides high availability, fault tolerance, and easy scaling of applications across multiple machines.
+
+
+Docker SWARM Overview::
+=====================
+- this is Docker Inc's Container Orchestration Platform
+
+- it only supports managing Docker containerized application workloads
+
+- it is pretty easy to install and learn
+
+- can be installed on a laptop with pretty basic configuation as well as it is very light weight
+
+- good for POC or learning purpose
+
+- not production grade
+
+
+Key Concepts in Docker Swarm:
+===============================
+•	Node: A machine (physical or virtual) running Docker that is part of the Swarm cluster. There are two types of nodes:
+
+o	Manager Node: Manages the cluster and orchestrates services.
+
+o	Worker Node: Runs the actual containers based on instructions from manager nodes.
+
+•	Service: A service is a description of the tasks (containers) you want to run. When you define a service, Docker Swarm ensures that the desired number of replicas of that service are running at all times.
+
+•	Task: A task is a running container in the context of a service. Each task runs a container that is part of a service.
+
+Docker vs Docker Swarm::
+============================
+•	Docker is used to build and run containers on a single machine, whereas Docker Swarm extends Docker to manage containers across a cluster of machines.
+
+•	Docker Swarm provides orchestration features such as load balancing, scaling, and high availability, which are not available in basic Docker.
+
+•	Docker Swarm is built into Docker, making it easier to set up and use compared to other container orchestration systems like Kubernetes.
+
+
+I have created 3 ubuntu machines::
+================================
+
+1.Manager Node
+
+2.Worker Node1
+
+3. Worker Node2
+
+![image](https://github.com/user-attachments/assets/1c3827ee-7df0-4063-b36e-51345ef08afd)
+
+
+![image](https://github.com/user-attachments/assets/8d70d3eb-1df0-46a0-bbae-fa9474112b8f)
+
+>docker swarm init runs on master
+
+>docker swarm join runs on node
+
+> docker swarm join --token SWMTKN-1-33cj3h7mhtq98iy5aifyy9s1cdqnzh4jgl3rdgdez0vbfx8fnc-bu27q63wt2i7qfgkh0r07o85o 172.31.24.64:2377
+
+![image](https://github.com/user-attachments/assets/c3434137-924b-4ea7-9a3f-24f188d3d19a)
+
+![image](https://github.com/user-attachments/assets/015201ed-aea1-461f-90bc-08c1d78fae7b)
+
+![image](https://github.com/user-attachments/assets/06424e51-1f9b-46e3-89af-80062ccb2f26)
+
+>once initialize the swarm it will automatically created overlay network
+
+![image](https://github.com/user-attachments/assets/d19378c2-01c9-4698-ad1d-c8af6aff1a55)
+
+
+create our own overlay network ::
+==========================
+
+>docker network create –d overlay sr-overlay
+
+![image](https://github.com/user-attachments/assets/84319ff3-e569-40c5-bdf6-69634bf65484)
+
+> docker network create -d overlay sr-overlay
+
+>docker node ls
+
+![image](https://github.com/user-attachments/assets/3fb48730-74d2-4e65-ac80-dce537b2438a)
+
+![image](https://github.com/user-attachments/assets/c545c853-157b-484f-8b7b-e3c81236d142)
+
+create service under the overlay network::
+========================
+
+> docker service create -d --name my-own-SRservice --replicas 3 -p 80:80 nginx:latest
+
+>docker service ls
+
+>docker node ls
+
+--docker always maintain --replicas 3 means 3 containers by default if for example 1 container die docker automatically create container automatically this is main use of services with docker
+
+docker swarm:: multi containarization for your applications
+
+Docker Swarm is a built-in container orchestration tool that allows you to manage a cluster of Docker hosts as a single entity
+
+
