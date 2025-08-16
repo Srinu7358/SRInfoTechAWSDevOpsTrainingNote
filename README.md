@@ -1668,7 +1668,7 @@ In search box App Password
 ![image](https://github.com/user-attachments/assets/814dc39c-290f-4035-bec8-6871cfd44467)
 
 
-Zvqxxvplduhrlffv   --we should provide this password in Jenkins Email configuration level
+ we should provide this password in Jenkins Email configuration level
 
 
 ![image](https://github.com/user-attachments/assets/b1cde092-d3ed-4ae8-b9fb-e3fd32095fce)
