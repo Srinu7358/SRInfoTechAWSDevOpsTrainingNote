@@ -7560,7 +7560,10 @@ a cluster might refer to a set of virtual machines or containers working togethe
 Kubernetes Cluster Components:
 ===================================
 
-1.Master Node (Control Plane): The Master Node is the brain of the Kubernetes cluster. It manages the cluster and makes decisions about scheduling, scaling, and maintaining the health of the application. The control plane consists of several key components:
+1.Master Node (Control Plane): 
+=====================================
+
+The Master Node is the brain of the Kubernetes cluster. It manages the cluster and makes decisions about scheduling, scaling, and maintaining the health of the application. The control plane consists of several key components:
 
 1.API Server::
 The API server exposes the Kubernetes API, which is used to interact with the cluster.
