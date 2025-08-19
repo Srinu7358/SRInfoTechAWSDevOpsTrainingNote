@@ -7591,3 +7591,80 @@ o The Worker Nodes are responsible for running the actual application workloads.
 4.Pods::
 
 A pod is the smallest unit of execution in Kubernetes and can contain one or more containers that share resources such as networking and storage. Pods are always deployed in a Kubernetes cluster and are managed by the control plane.
+
+
+
+19/08/2025::
+===========
+
+
+Services:
+===============
+A service in Kubernetes is a way to expose an application running in a pod to other pods or external users. It ensures that network communication between pods is reliable, even as pods are dynamically created or destroyed.
+
+1.Pod is a smallest component in kubernetes 
+
+2.In docker smallest component --  > container
+
+3.in kuberneties we will create pods and inside the pods containers are running.
+
+4.one pod speak with other pod using id address(kube-proxy)
+
+5.every pod has ip address
+
+
+<img width="1426" height="702" alt="image" src="https://github.com/user-attachments/assets/ff401123-20f7-43f8-b171-56e53ce1253d" />
+
+
+
+Above picture directly using pods without using services and if ipaddress no longer available our application is not worked. pods communication throw ip address right so it has a problem to resolved the this problem services is come to the picture.
+
+
+
+With Services::
+==================
+
+<img width="1526" height="748" alt="image" src="https://github.com/user-attachments/assets/7221fec6-3fc2-456c-8a30-6fbb708acefd" />
+
+
+Services –logical entity and maintain ip address
+
+
+Basically kubernetes is used for maintain containers
+
+
+Kubeadm::
+============
+bootstraps a cluster. It’s designed to be a simple way for new users to build clusters (more detail on this is in a later chapter).
+
+Kubectl::
+===========
+is a tool for interacting with your existing cluster.
+
+Kubelet: 
+============
+An agent that ensures the containers in the pods are running and check healthy.
+
+
+How to Install Kubernetes Cluster on Ubuntu 22.04::
+=====================================================
+
+Please follow the below link steps to configured the Kubernetes Master and Workers 
+
+https://www.linuxtechi.com/install-kubernetes-on-ubuntu-22-04/
+
+
+Docker Install link::
+=======================
+
+Make sure we should install the Docker in all the machines 
+
+https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-22-04
+
+root@k8smaster:~# docker --version
+
+Docker version 28.3.2, build 578ccf6
+
+
+
+
