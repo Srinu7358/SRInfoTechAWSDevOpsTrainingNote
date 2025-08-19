@@ -7505,7 +7505,8 @@ Kubernetes Overview::
 Kubernetes (often abbreviated as K8s) is an open-source container orchestration platform designed to automate the deployment, scaling, and management of containerized applications. Originally developed by Google.
 
 
-![image](https://github.com/user-attachments/assets/6f78888e-d2cd-469b-9f17-14d79c7458ce)
+<img width="1678" height="747" alt="image" src="https://github.com/user-attachments/assets/40054a14-9fef-40db-a43d-e8e7cc419ece" />
+
 
 
 free and opensource container orchestration platform developed by Google along with many open source contributors
@@ -7557,6 +7558,8 @@ a cluster might refer to a set of virtual machines or containers working togethe
 
 
 Kubernetes Cluster Components:
+===================================
+
 1.Master Node (Control Plane): The Master Node is the brain of the Kubernetes cluster. It manages the cluster and makes decisions about scheduling, scaling, and maintaining the health of the application. The control plane consists of several key components:
 
 1.API Server::
@@ -7571,7 +7574,9 @@ Ensures that the desired state of the system is maintained, such as ensuring tha
 4.etcd:
 A distributed key-value store used to store all cluster data, including the state of the system (like deployed pods, config maps, and secrets).
 
-Worker Nodes (Minions):
+Worker Nodes:
+===========================
+
 o The Worker Nodes are responsible for running the actual application workloads. These nodes host the pods, which are the smallest deployable units in Kubernetes. A worker node typically runs:
 
 1.Kubelet: An agent that ensures the containers in the pods are running and healthy.
