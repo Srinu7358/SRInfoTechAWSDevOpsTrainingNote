@@ -7668,7 +7668,7 @@ Docker version 28.3.2, build 578ccf6
 
 
 
-20/08/2025::
+22/08/2025::
 ==============
 
 How to Install Kubernetes Cluster on Ubuntu 22.04::
@@ -8143,3 +8143,1011 @@ all 3 projects images are pushed to docker hub::
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/4dbca3bb-f1a0-40e6-b140-6e9846f30c96" />
 
 
+
+25/08/2025::
+==============
+
+
+edit the yaml file
+
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project# ls
+
+README.md  kubernetes  productcatalogue  shopfront  stockmanager
+
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project# cd kubernetes/
+
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# ls
+
+productcatalogue-service.yaml  shopfront-service.yaml  stockmanager-service.yaml
+
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# sudo vi shopfront-service.yaml
+
+in yaml file please use your docker hub image------->srinu7358/shopfront-myapp
+
+verify the pods,deployments,services::
+=========================
+
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get pods
+
+No resources found in default namespace.
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get deploy
+
+No resources found in default namespace.
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get service
+
+NAME         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+kubernetes   ClusterIP   10.96.0.1        <none>        443/TCP        47h
+
+apply the yaml file::
+========
+
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl apply -f shopfront-service.yaml
+
+service/shopfront created
+deployment.apps/shopfront created
+ above command is used to created pods,deployments,servcies
+
+ root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get po
+ 
+NAME                         READY   STATUS    RESTARTS   AGE
+shopfront-69467555f6-nzsxw   1/1     Running   0          22s
+
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get deploy
+
+NAME           READY   UP-TO-DATE   AVAILABLE   AGE
+shopfront      1/1     1            1           7m2s
+
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get service
+
+NAME           TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+kubernetes     ClusterIP   10.96.0.1       <none>        443/TCP          2d
+shopfront      NodePort    10.109.12.218   <none>        8010:32451/TCP   7m14s
+
+we need to do other 2 micro services as well
+
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# sudo vi productcatalogue-service.yaml
+
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl apply -f productcatalogue-service.yaml
+
+service/productcatalogue created
+deployment.apps/productcatalogue created
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get po
+
+NAME                               READY   STATUS         RESTARTS     AGE
+productcatalogue-968c9cbf8-dl5zx   0/1     ErrImagePull   0            15s
+shopfront-69467555f6-nzsxw         1/1     Running        0            9m4s
+stockmanager-6c4454c6cb-2hhfd      1/1     Running        3 (2s ago)   2m43s
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get deploy
+
+NAME               READY   UP-TO-DATE   AVAILABLE   AGE
+productcatalogue   0/1     1            0           42s
+shopfront          1/1     1            1           9m31s
+stockmanager       1/1     1            1           3m10s
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get svc
+
+NAME               TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+kubernetes         ClusterIP   10.96.0.1        <none>        443/TCP          2d
+productcatalogue   NodePort    10.105.165.177   <none>        8020:32215/TCP   56s
+shopfront          NodePort    10.109.12.218    <none>        8010:32451/TCP   9m45s
+stockmanager       NodePort    10.96.92.240     <none>        8030:31767/TCP   3m24s
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get deploy
+
+NAME               READY   UP-TO-DATE   AVAILABLE   AGE
+productcatalogue   0/1     1            0           71s
+shopfront          1/1     1            1           10m
+stockmanager       1/1     1            1           3m39s
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get po
+
+NAME                               READY   STATUS             RESTARTS      AGE
+productcatalogue-968c9cbf8-dl5zx   0/1     ImagePullBackOff   0             77s
+shopfront-69467555f6-nzsxw         1/1     Running            0             10m
+stockmanager-6c4454c6cb-2hhfd      1/1     Running            4 (14s ago)   3m45s
+
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get po
+
+NAME                               READY   STATUS             RESTARTS      AGE
+productcatalogue-968c9cbf8-dl5zx   0/1     ImagePullBackOff   0             2m8s
+shopfront-69467555f6-nzsxw         1/1     Running            0             10m
+stockmanager-6c4454c6cb-2hhfd      1/1     Running            5 (15s ago)   4m36s
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# sudo vi productcatalogue-service.yaml
+
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl apply -f productcatalogue-service.yaml
+
+service/productcatalogue unchanged
+deployment.apps/productcatalogue configured
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get po
+
+NAME                                READY   STATUS             RESTARTS      AGE
+productcatalogue-86c9dd7b7b-bzj29   1/1     Running            0             16s
+shopfront-69467555f6-nzsxw          1/1     Running            0             14m
+stockmanager-6c4454c6cb-2hhfd       0/1     CrashLoopBackOff   6 (44s ago)   8m25s
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get po
+
+NAME                                READY   STATUS             RESTARTS      AGE
+productcatalogue-86c9dd7b7b-bzj29   1/1     Running            0             28s
+shopfront-69467555f6-nzsxw          1/1     Running            0             14m
+stockmanager-6c4454c6cb-2hhfd       0/1     CrashLoopBackOff   6 (56s ago)   8m37s
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl apply -f stockmanager-service.yaml
+
+service/stockmanager unchanged
+deployment.apps/stockmanager configured
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get po
+
+NAME                                READY   STATUS             RESTARTS      AGE
+productcatalogue-86c9dd7b7b-bzj29   1/1     Running            0             47s
+shopfront-69467555f6-nzsxw          1/1     Running            0             15m
+stockmanager-6c4454c6cb-2hhfd       0/1     CrashLoopBackOff   6 (75s ago)   8m56s
+
+
+if any pod is CrashLoopBackOff , please delete or update new image
+
+delete the pod::
+==================
+
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get po
+
+NAME                                READY   STATUS             RESTARTS      AGE
+productcatalogue-86c9dd7b7b-bzj29   1/1     Running            0             47s
+shopfront-69467555f6-nzsxw          1/1     Running            0             15m
+stockmanager-6c4454c6cb-2hhfd       0/1     CrashLoopBackOff   6 (75s ago)   8m56s
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl delete po stockmanager-6c4454c6cb-2hhfd
+
+verify the after deleted::
+====================
+
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get po
+
+NAME                                READY   STATUS    RESTARTS   AGE
+productcatalogue-86c9dd7b7b-bzj29   1/1     Running   0          91s
+shopfront-69467555f6-nzsxw          1/1     Running   0          16m
+stockmanager-6c4454c6cb-8wkxv       1/1     Running   0          5s
+
+all 3 micro service projects ,running pods,deploy,services::
+===========================================================
+
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get po
+
+NAME                                READY   STATUS    RESTARTS      AGE
+productcatalogue-86c9dd7b7b-bzj29   1/1     Running   0             2m54s
+shopfront-69467555f6-wwfbv          1/1     Running   0             5s
+stockmanager-6c4454c6cb-8wkxv       1/1     Running   1 (28s ago)   88s
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get deploy
+
+NAME               READY   UP-TO-DATE   AVAILABLE   AGE
+productcatalogue   1/1     1            1           10m
+shopfront          1/1     1            1           19m
+stockmanager       1/1     1            1           12m
+root@ip-172-31-36-154:~/docker-Java-kubernetes-project/kubernetes# kubectl get svc
+
+NAME               TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+kubernetes         ClusterIP   10.96.0.1        <none>        443/TCP          2d
+productcatalogue   NodePort    10.105.165.177   <none>        8020:32215/TCP   10m
+shopfront          NodePort    10.109.12.218    <none>        8010:32451/TCP   19m
+stockmanager       NodePort    10.96.92.240     <none>        8030:31767/TCP   13m
+
+
+>kubectl describe svc shopfront
+
+use above command to ge the details of service 
+
+in kubernetes we have multiple key components or objects::
+======================
+
+ YAML::
+
+apiversion  --v1 or v2 --standadard syntax
+ kind  ----deployment/service
+ metadata  ----we can define name of the service
+   name: shopfront
+ labels ---->laben are very important in kubernetes and match with pod and matcgh with service
+
+ spec
+   type: clusterIP/NodePort
+
+   ClusterIP::
+   ==============
+
+   ClusterIP is the default service type in Kubernetes. It creates a virtual IP (VIP) inside the cluster that other internal components (pods/services) can access — but it's not accessible from outside the cluster.
+
+   apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+spec:
+  type: ClusterIP  # This is the default, so it can be omitted
+  selector:
+    app: my-backend
+  ports:
+    - protocol: TCP
+      port: 80           # Port exposed by the service
+      targetPort: 8080   # Port the container is listening on
+
+
+ NodePort:
+ =====
+   NodePort is a type of Kubernetes Service that exposes your app outside the cluster, by opening a specific port on each worker node's IP address.
+
+   apiVersion: v1
+kind: Service
+metadata:
+  name: my-nodeport-service
+spec:
+  type: NodePort
+  selector:
+    app: my-app
+  ports:
+    - port: 80          # Service port (used internally by ClusterIP)
+      targetPort: 8080  # Port on the pod
+      nodePort: 30080   # Optional: if not set, Kubernetes picks one
+
+
+root@k8smaster:~# kubectl get svc
+
+NAME               TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+
+kubernetes         ClusterIP   10.96.0.1        <none>        443/TCP          2d11h
+
+nginx-app          NodePort    10.102.214.44    <none>        80:31129/TCP     2d10h
+
+productcatalogue   NodePort    10.101.216.239   <none>        8020:32208/TCP   2d10h
+
+shopfront          NodePort    10.102.253.116   <none>        8010:31499/TCP   2d10h
+
+stockmanager       NodePort    10.96.66.251     <none>        8030:32579/TCP   2d10h
+
+root@k8smaster:~# kubectl get deploy
+
+NAME               READY   UP-TO-DATE   AVAILABLE   AGE
+
+nginx-app          2/2     2            2           2d11h
+
+productcatalogue   1/1     1            1           2d10h
+
+shopfront          1/1     1            1           2d10h
+
+stockmanager       1/6     6            1           2d10h
+
+root@k8smaster:~# kubectl get pods
+
+NAME                                READY   STATUS             RESTARTS          AGE
+
+nginx-app-5777b5f95-fcx8r           1/1     Running            0                 2d11h
+
+nginx-app-5777b5f95-v5ghx           1/1     Running            0                 2d11h
+
+productcatalogue-869f894bc7-66f86   1/1     Running            0                 2d10h
+
+shopfront-66555cc947-hkg9v          1/1     Running            0                 2d10h
+
+stockmanager-7657c6dfc5-4rntl       0/1     CrashLoopBackOff   995 (4m31s ago)   2d10h
+
+stockmanager-7657c6dfc5-4skjh       0/1     CrashLoopBackOff   1016 (112s ago)   2d10h
+
+stockmanager-7657c6dfc5-657z6       0/1     CrashLoopBackOff   997 (2m11s ago)   2d10h
+
+stockmanager-7657c6dfc5-7nrdc       0/1     CrashLoopBackOff   995 (3m11s ago)   2d10h
+
+stockmanager-7657c6dfc5-f46vf       1/1     Running            996 (5m41s ago)   2d10h
+
+stockmanager-7657c6dfc5-qznfs       0/1     CrashLoopBackOff   999 (118s ago)    2d10h
+
+
+root@k8smaster:~# kubectl get svc
+
+NAME               TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+
+kubernetes         ClusterIP   10.96.0.1        <none>        443/TCP          2d11h
+
+nginx-app          NodePort    10.102.214.44    <none>        80:31129/TCP     2d11h
+
+productcatalogue   NodePort    10.101.216.239   <none>        8020:32208/TCP   2d10h
+
+shopfront          NodePort    10.102.253.116   <none>        8010:31499/TCP   2d10h
+
+stockmanager       NodePort    10.96.66.251     <none>        8030:32579/TCP   2d10h
+
+PORTS for all 3 micro services::
+=================================
+shopfront                  8010:31499/TCP 
+
+productcatalogue           8020:32208/TCP    
+
+stockmanager               8030:32579/TCP 
+
+Navigate to browser url shopfront with port
+
+http://35.94.221.231:31499/
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/5e7be549-ebd1-4bd5-b7e2-615f329b5a62" />
+
+Navigate to browser url productcatalogue with port
+
+http://35.94.221.231:32208/products
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/a5dadfab-9d61-4cc4-9306-f49f910bb03b" />
+
+Navigate to browser url stockmanager with port
+
+http://35.94.221.231:32579/stocks
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/b313bbf1-b052-4595-9426-4b1a33b8156f" />
+
+
+<img width="1625" height="644" alt="image" src="https://github.com/user-attachments/assets/754f87cc-0356-4ac7-917e-597a29c1fc8c" />
+
+
+
+25/08/2025::
+===============
+
+
+OpenShift Orchestration::
+=============================
+
+OpenShift Orchestration::
+======================
+
+
+OpenShift is an open-source container application platform built around Docker containers and Kubernetes. It's designed to help developers and IT organizations to develop, deploy, and manage applications in a highly automated environment. OpenShift offers a range of tools to make the development process more streamlined, such as CI/CD (Continuous Integration/Continuous Delivery) pipelines, a user-friendly web console, monitoring, and logging features.
+Here are some key features and components of OpenShift:
+1.	Kubernetes-based orchestration: OpenShift is built on top of Kubernetes, providing advanced container orchestration, scaling, and management.
+2.	Developer Tools: OpenShift offers tools that make it easier for developers to deploy applications, like a simple web-based interface, CLI (Command Line Interface), and built-in support for various programming languages.
+3.	Integrated CI/CD Pipelines: OpenShift integrates with Jenkins and other tools to automate the process of building, testing, and deploying applications.
+4.	Security: OpenShift has several security features, including integrated authentication, network policies, and role-based access control (RBAC).
+5.	Multi-cloud & Hybrid Cloud: It supports hybrid cloud environments, so applications can run across multiple infrastructures—on-premises, in the cloud, or a combination.
+6.	Automated Scaling: OpenShift can automatically scale applications up or down based on resource usage.
+7.	Registry and Image Management: It includes a built-in container registry to manage Docker images and store them for your applications
+
+Red Hat Openshift Overview::
+============================
+
+- Red Hat Openshift is developed on top of Opeensource OKD ( which in turn is developed on top of opensource Kubernetes )
+- supports command line interface and webconsole(GUI)
+- supports Role based access control (RBAC), hence multiple users can be created with different level of access to Openshift cluster
+- supports many additional features on top of all the Kubernetes features
+  1. User Management
+  2. Pre-integrated monitoring tools ( Prometheus & Grafana Dashboards )
+  3. Out of the box - Private Container Registry
+  4. Routes - a new feature only available in Openshift which is developed on top of Kubernetes Ingress
+  5. Using the Kubernetes operators, the Red Hat Openshift team has many additional features on top of Kubernetes
+- Openshift version upto 3 - supported many different container runtime/engines including Docker
+- Openshift version 4 and above - only supports Podman Container Engine and CRI-O Container Runtime
+- Due to security vulnerabilities issues in Docker, 
+
+Using Free RedHat Developer Sandox on cloud - Openshift::
+=============================
+
+https://console.redhat.com/openshift/sandbox
+
+we need to register free Red Hat account for  OpenShift
+
+![image](https://github.com/user-attachments/assets/d78d4def-c589-446d-934b-3109d979b3be)
+
+![image](https://github.com/user-attachments/assets/c4900081-a748-4f8b-b1fa-625fcccb3b5c)
+
+Enter Redhat Login Name
+
+![image](https://github.com/user-attachments/assets/785803bd-4d2b-480f-9d1e-9249a3d28cad)
+
+Enter the Password
+
+![image](https://github.com/user-attachments/assets/234e53d4-da04-4781-92d6-f44baed46307)
+
+![image](https://github.com/user-attachments/assets/16f49b20-0632-46c7-920e-e87cd7894ce1)
+
+click create account
+
+![image](https://github.com/user-attachments/assets/1478f402-bb54-4166-8351-c77cb04e4303)
+
+you will get the Email verification, please check the email
+
+![image](https://github.com/user-attachments/assets/a0b0a9cf-d103-4fae-92d7-a70f62f8d391)
+
+![image](https://github.com/user-attachments/assets/7182b022-e9a6-442a-96eb-a19bfd0e5401)
+
+click the link which is you got
+
+![image](https://github.com/user-attachments/assets/4dd9989d-3c90-4ac3-a510-ab26b2f3cf42)
+
+Red Hat Developer Sandbox
+
+![image](https://github.com/user-attachments/assets/42a31572-f423-4512-bfbd-5a3684b52508)
+
+![image](https://github.com/user-attachments/assets/bfb647b7-747a-4338-b640-209587fa699f)
+
+![image](https://github.com/user-attachments/assets/4d7d539a-9a07-4df4-9ecb-ceee0797d482)
+
+Select Openshift Launch
+
+![image](https://github.com/user-attachments/assets/19773259-41b0-47ae-8f76-e2386d520d1b)
+
+
+click DevSandBox
+
+![image](https://github.com/user-attachments/assets/f0218c41-9bdf-4c8b-9684-9f2c54574d63)
+
+select Role is Developer
+
+![image](https://github.com/user-attachments/assets/5d6e2c8f-c1d5-4ee1-a399-74ef2e03fd00)
+
+click all selected permissions
+
+![image](https://github.com/user-attachments/assets/17d83152-51fe-49b8-8a31-ba66884efaf1)
+
+![image](https://github.com/user-attachments/assets/f4e855fd-a34a-4668-941b-fb4baf3c28bb)
+
+![image](https://github.com/user-attachments/assets/2ce3c97d-de12-4e69-b2b4-6e51100d421a)
+
+Get started
+
+![image](https://github.com/user-attachments/assets/ac637db7-c2cc-4b8f-8841-809131f72732)
+
+Openshift is ready and go to Developer -->Helm---->Helm charts---->search Jenkins ---Installed Jenkins Helm Charts
+
+
+![image](https://github.com/user-attachments/assets/b91564a1-27d1-473c-b8b3-ce67403694fc)
+
+Login command line::
+
+OC ----> Openshift Client
+
+click Copy login command at top right corner
+
+![image](https://github.com/user-attachments/assets/4e1735af-4114-4d8d-8c01-526127c36ceb)
+
+![image](https://github.com/user-attachments/assets/6f4cfb80-19ca-4a3b-b4be-405c6e69f812)
+
+copy Login in with this Token
+
+![image](https://github.com/user-attachments/assets/11a7edbb-f3aa-4e79-8457-90dedfb0af06)
+
+![image](https://github.com/user-attachments/assets/3d18ae45-f2d6-43ca-b8e5-95d5b2d23a64)
+
+Getting oc command is not found
+
+So we need to download the oc from google
+
+1 download oc.exe https://developers.redhat.com/openshift/command-line-tools
+2 navigate to environment variables -> system variables -> new
+3 add here: /path/to/the/oc.exe
+
+https://docs.redhat.com/en/documentation/openshift_container_platform/4.8/html/cli_tools/openshift-cli-oc#cli-installing-cli_cli-developer-commands
+
+https://access.redhat.com/downloads/content/290/ver=4.18/rhel---9/4.18.7/x86_64/product-software
+
+OC download LInk::
+=====================
+
+OC
+is a client tool used to create and manage Openshift resources in OpenShift
+it makes REST call to API Server
+
+https://access.redhat.com/downloads/content/290/ver=4.18/rhel---9/4.18.8/x86_64/product-software
+
+Download Windows client
+
+![image](https://github.com/user-attachments/assets/14d36459-8cf3-4ba1-8cb5-361f34730aa0)
+
+Download the oc for window and extracted all the files
+
+![image](https://github.com/user-attachments/assets/85d30663-3fc1-4a7a-878a-3f316b74ce7c)
+
+Open from command line
+
+![image](https://github.com/user-attachments/assets/999801e8-1078-474c-9ab1-27e4bb3e8a21)
+
+
+![image](https://github.com/user-attachments/assets/3122d471-9a89-467c-b986-d9229f95db9f)
+
+Switch project
+>oc project <projectname>
+>oc project srinu942-dev
+
+![image](https://github.com/user-attachments/assets/31f81eac-41a4-403b-8de3-3edf5089e4f0)
+
+OpenShift resources
+•	Deployment (K8s resource)
+•	ReplicaSet (K8s resource)
+•	Pod (K8s resource)
+•	Job (K8s resource)
+•	DaemonSet (K8s resource)
+•	StatefulSet (K8s resource)
+•	Build ( OpenShift resource - Custom Resource added by OpenShift )
+•	ImageStream ( OpenShift resource - Custom Resource added by OpenShift )
+•	DeploymentConfig ( OpenShift resource - Custom Resource added by OpenShift )
+
+Deployment command looks like this
+>oc create deployment nginx --image=bitnami/nginx:latest --replicas=3
+
+![image](https://github.com/user-attachments/assets/dbc5a3bd-aa15-4346-b753-9621d8dd3e81)
+
+Deployment::
+=================
+This is a JSON/YAML definition which is stored in etcd database
+The deployment is managed by Deployment Controller
+when we applications, they are deployed as Deployment with Kubernetes/OpenShift
+Deployment Controller creates ReplicaSet, which is then managed by ReplicaSet Controller
+Deployment has one or more ReplicaSet(s)
+
+ReplicaSet::
+=============
+This is a JSON/YAML definition which is stored in etcd database
+The ReplicaSet is managed by ReplicaSet Controller
+ReplicaSet capture details like
+How many Pod instances are desired?
+ReplicaSet Controller reads the ReplicaSet definition and learns the desired Pod instance count
+ReplicaSet Controller creates so many Pod definition as indicated in the ReplicaSet
+ReplicaSet Controller ensures the desired Pod count matches with the actual Pod count, whenever a Pod crashes, it is the responsibility of ReplicaSet Controller to ensure the desired and actual Pods are equal
+ReplicaSet has one or more Pods
+
+Pod::
+====
+is a collection of one or more Containers
+IP address is assigned on the Pod level not on the Container level
+If two containers are in the same Pod, there will be sharing IP Address of the Pod
+within container, application are deployment ( tomcat,mysql, nginx these are applications )
+recommended best practice,only one application should be there in a Pod
+Pods are scheduled by Scheduler onto some Node
+every Pod has a Network Stack and Network Interface Card (NIC)
+
+Kubelet::
+===========
+is a daemon service that interacts with the Container Runtime on the current node/server where kubelet is running
+kubelet downloads the required container image and creates the Pod containers
+kubelet frequently reports the status of Pod container status to the API server
+kubelet also monitors the health of POds running on the node and ensures they are healthy
+kubelet will there on every node ( master and worker nodes )
+
+kube-proxy::
+=============
+is a Pod that runs one instance per node (both master and worker nodes)
+provides load-balancing a group of similar Pods
+Sample Demo Project fro Openshift
+
+Kubectl::
+========
+is a client tool used to create and manage deployments and services in Kubernetes
+it also works in OpenShift
+it make REST call to API Server
+
+OC::
+===
+is a client tool used to create and manage Openshift resources in OpenShift
+it makes REST call to API Server
+
+https://github.com/wicksy/openshift-demo-app/tree/master
+https://github.com/wicksy/openshift-demo-app
+
+Login command line::
+
+OC ----> Openshift Client
+
+click Copy login command at top right corner
+
+![image](https://github.com/user-attachments/assets/4e1735af-4114-4d8d-8c01-526127c36ceb)
+
+![image](https://github.com/user-attachments/assets/6f4cfb80-19ca-4a3b-b4be-405c6e69f812)
+
+copy Login in with this Token
+
+![image](https://github.com/user-attachments/assets/11a7edbb-f3aa-4e79-8457-90dedfb0af06)
+
+![image](https://github.com/user-attachments/assets/3d18ae45-f2d6-43ca-b8e5-95d5b2d23a64)
+
+Getting oc command is not found
+
+So we need to download the oc from google
+
+1 download oc.exe https://developers.redhat.com/openshift/command-line-tools
+2 navigate to environment variables -> system variables -> new
+3 add here: /path/to/the/oc.exe
+
+https://docs.redhat.com/en/documentation/openshift_container_platform/4.8/html/cli_tools/openshift-cli-oc#cli-installing-cli_cli-developer-commands
+
+https://access.redhat.com/downloads/content/290/ver=4.18/rhel---9/4.18.7/x86_64/product-software
+
+OC download LInk::
+=====================
+
+OC
+is a client tool used to create and manage Openshift resources in OpenShift
+it makes REST call to API Server
+
+https://access.redhat.com/downloads/content/290/ver=4.18/rhel---9/4.18.8/x86_64/product-software
+
+Download Windows client
+
+![image](https://github.com/user-attachments/assets/14d36459-8cf3-4ba1-8cb5-361f34730aa0)
+
+Download the oc for window and extracted all the files
+
+![image](https://github.com/user-attachments/assets/85d30663-3fc1-4a7a-878a-3f316b74ce7c)
+
+
+OC (Openshift Client) Environment Path Setup::
+=================================================
+
+Go to Environment Variable
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/49b284e4-d6f4-4174-882b-eba40f7278a7" />
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/785ec522-2004-4b35-a508-ae66bb170e3a" />
+
+Set the User Variables::
+===========================
+
+C:\Openshift\oc\
+
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/c5c9a09a-bd7a-445e-ac0a-5ae719ee5b7b" />
+
+Set the System Variables and Path::
+===================================
+
+C:\Openshift\oc\
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/fb77f2ad-5bd6-4e30-9e1f-88c40f65d4a5" />
+
+click OK ----> OK----> OK
+
+Go to command prompt
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/49ebb7c8-f469-4046-9c44-2030129aa615" />
+
+verify the OC
+
+>oc
+
+
+verify the oc verison
+
+>oc version
+
+
+C:\Users\HP>oc version
+
+Client Version: 4.19.3
+
+Kustomize Version: v5.5.0
+
+Server Version: 4.18.16
+
+Kubernetes Version: v1.31.8
+
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/48fd2ee7-1510-416d-8124-ec3ac161fec5" />
+
+
+Clone the Project from Openshift Command line(cli)::
+========================================================
+
+>git clone https://github.com/srinfotech7358/docker-Java-kubernetes-project.git
+
+
+C:\Users\HP>git clone https://github.com/srinfotech7358/docker-Java-kubernetes-project.git
+
+Cloning into 'docker-Java-kubernetes-project'...
+
+remote: Enumerating objects: 173, done.
+
+remote: Counting objects: 100% (58/58), done.
+
+remote: Compressing objects: 100% (47/47), done.
+
+Rremote: Total 173 (delta 33), reused 10 (delta 10), pack-reused 115 (from 1)
+
+Receiving objects: 100% (173/173), 31.47 KiB | 4.00 KiB/s, done.
+
+Resolving deltas: 100% (41/41), done.
+
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/2eb89ce1-14e2-4cff-92de-2aa757f9a2cd" />
+
+>cd docker-Java-kubernetes-project
+
+>cd kubernetes
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/fb1c3b1f-4da1-4cff-9f5a-4f72e0aae4ce" />
+
+>oc projects
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/250aba7f-14e3-46b7-8f1c-032da5197b11" />
+
+switch the project
+
+>oc project <projectname OR Namespace>
+
+>oc project srinfotech7358-dev
+
+C:\Users\HP\docker-Java-kubernetes-project\kubernetes>oc project srinfotech7358-dev
+
+Already on project "srinfotech7358-dev" on server "https://api.rm1.0a51.p1.openshiftapps.com:6443".
+
+C:\Users\HP\docker-Java-kubernetes-project\kubernetes>
+
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/198007de-0f67-4ba8-9d33-33ae5386f1d7" />
+
+
+create the openshift deployment::
+====================================
+
+Syntax::
+========
+
+>kubectl apply -f <playbook/yaml/yml>
+
+>oc apply -f shopfront-service.yaml
+
+>oc apply -f productcatalogue-service.yaml
+
+>oc apply -f stockmanager-service.yaml
+
+all 3 Micro services Deployemnts is created
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/6ec769fc-fed2-4601-92fd-7ac0a0ad7f13" />
+
+
+expose Openshift Services::
+============================
+
+Syntax::
+===============
+
+>oc expose service <servicename>
+
+>oc expose deployment <deploymentName>
+
+>oc get svc OR services
+
+C:\Users\HP\docker-Java-kubernetes-project\kubernetes>oc get svc
+NAME                          TYPE           CLUSTER-IP       EXTERNAL-IP                                                  PORT(S)                                              AGE
+example                       ClusterIP      172.30.120.21    <none>                                                       80/TCP                                               7d6h
+jenkins                       ClusterIP      172.30.2.244     <none>                                                       80/TCP                                               7d7h
+jenkins-jnlp                  ClusterIP      172.30.35.46     <none>                                                       50000/TCP                                            7d7h
+modelmesh-serving             ClusterIP      None             <none>                                                       8033/TCP,8008/TCP,8443/TCP,2112/TCP                  7d7h
+my-app-service                ClusterIP      172.30.167.153   <none>                                                       8080/TCP                                             9h
+nginx                         ClusterIP      172.30.43.7      <none>                                                       8080/TCP                                             7h30m
+petclinic-00001               ClusterIP      172.30.121.230   <none>                                                       80/TCP,443/TCP                                       7h41m
+petclinic-00001-private       ClusterIP      172.30.127.53    <none>                                                       80/TCP,443/TCP,9090/TCP,9091/TCP,8022/TCP,8012/TCP   7h41m
+productcatalogue              NodePort       172.30.36.130    <none>                                                       8020:30170/TCP                                       8h
+shopfront                     NodePort       172.30.246.166   <none>                                                       8010:31109/TCP                                       8h
+sonarqube                     ClusterIP      172.30.197.221   <none>                                                       9000/TCP                                             7h13m
+spring-ms-git                 ExternalName   <none>           kourier-internal.knative-serving-ingress.svc.cluster.local   80/TCP                                               7d6h
+spring-ms-git-00001           ClusterIP      172.30.134.127   <none>                                                       80/TCP,443/TCP                                       7d6h
+spring-ms-git-00001-private   ClusterIP      172.30.131.234   <none>                                                       80/TCP,443/TCP,9090/TCP,9091/TCP,8022/TCP,8012/TCP   7d6h
+stockmanager                  NodePort       172.30.158.37    <none>                                                       8030:31782/TCP                                       7h53m
+
+
+>oc expose service shopfront
+
+>oc expose service productcatalogue
+
+>oc expose service stockmanager
+
+all 3 micro services are up & running in Openshift cluster
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/494b1042-e10b-424a-a50b-0b632e021a9e" />
+
+
+Shopfront::
+=============
+
+http://shopfront-srinfotech7358-dev.apps.rm1.0a51.p1.openshiftapps.com/
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/b73a85c7-d73e-4f25-bd98-364afab07df5" />
+
+
+productcatalogue::
+====================
+
+http://shopfront-srinfotech7358-dev.apps.rm1.0a51.p1.openshiftapps.com/products
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/a105b423-c20b-4823-8ae4-eb8ca69944a5" />
+
+
+stockmanager::
+===================
+
+http://stockmanager-srinfotech7358-dev.apps.rm1.0a51.p1.openshiftapps.com/stocks
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/393c4678-fd19-49ed-8def-bc08b7190529" />
+
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/5f4eed44-9f10-4549-84bb-6506d65911fa" />
+
+
+Deploy Nginx Application To Openshift Platform::CLI
+=====================================================
+
+>oc create deployment nginx --image=bitnami/nginx:latest
+
+>oc expose deployment nginx --port=8080 --target-port=8080 --name=nginx
+
+
+http://route-unfortunate-smelt-srinfotech7358-dev.apps.rm1.0a51.p1.openshiftapps.com/
+
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/7b164789-3b24-4212-8d53-989011144a96" />
+
+
+26/08/2025::
+============
+
+Splunk::
+============
+
+Splunk is a powerful platform for searching, monitoring, and analyzing machine-generated big data via a web-style interface. It’s widely used for:
+
+1.Log aggregation
+
+2.Monitoring and observability
+
+3.Security (SIEM/SOAR)
+
+4.Dashboards and alerting
+
+Splunk Integrate With Jenkins::
+===========================
+
+Jenkins install link
+
+https://www.cherryservers.com/blog/install-jenkins-ubuntu
+
+Splunk install link
+
+https://www.splunk.com/en_us/download/splunk-enterprise.html
+
+Create Account
+
+![image](https://github.com/user-attachments/assets/4275dc32-37e7-41a4-8634-89bff7f6ce38)
+
+Click Create your account
+
+
+Verify the email
+
+![image](https://github.com/user-attachments/assets/65095d9c-4f93-4d44-9f0c-50d11c752093)
+
+![image](https://github.com/user-attachments/assets/9479e5ef-2f2f-481a-9ff2-796971238eb7)
+
+Copy Wget URL
+
+wget -O splunk-9.4.1-e3bdab203ac8-linux-amd64.deb https://download.splunk.com/products/splunk/releases/9.4.1/linux/splunk-9.4.1-e3bdab203ac8-linux-amd64.deb
+
+![image](https://github.com/user-attachments/assets/91dcd374-23b5-4951-ba91-2031f3df5e7a)
+
+Create one AWS Ubuntu Machine and past the Wget url and enter
+
+![image](https://github.com/user-attachments/assets/da0d2f58-6893-41a3-87dc-9cfde5abdb54)
+
+![image](https://github.com/user-attachments/assets/6ca6e5cc-e93e-4fc2-ad07-321d2b546b6d)
+
+Download successfully using that wget url
+
+![image](https://github.com/user-attachments/assets/9ab0f410-654b-41bf-aeaf-0ddd9cb8f9bf)
+
+Go to splunk tutorial
+https://docs.splunk.com/Documentation/Splunk/9.4.1/SearchTutorial/WelcometotheSearchTutorial
+
+go to below link
+
+https://docs.splunk.com/Documentation
+
+click Splunk enterprise
+![image](https://github.com/user-attachments/assets/e29a16ac-e8c0-4001-b9e7-0a38083a143c)
+
+Search tutorial
+![image](https://github.com/user-attachments/assets/a4c67579-d4a8-433f-b5f8-b7e8c03a6440)
+
+Part 1: Getting started
+
+•	Install Splunk Enterprise
+
+![image](https://github.com/user-attachments/assets/8cd7631b-f021-4e17-8c17-c745719cd89e)
+
+Install the Splunk Enterprise DEB package
+![image](https://github.com/user-attachments/assets/9d25b1f5-610b-424c-a382-ada36c84def9)
+
+dpkg -i splunk_package_name.deb.
+
+>sudo dpkg -i
+
+![image](https://github.com/user-attachments/assets/eab015f9-658c-40a4-a0a9-f3d4a5fe9c2e)
+
+Run below command in ubuntu
+
+>sudo dpkg -i splunk-9.4.1-e3bdab203ac8-linux-amd64.deb
+
+![image](https://github.com/user-attachments/assets/b927efe6-7bf2-47f1-bc5c-08362cd95812)
+
+
+![image](https://github.com/user-attachments/assets/a071e14d-4dda-415c-8bdb-ed610ce66b56)
+
+To start the splunk please run below command
+
+>sudo /opt/splunk/bin/splunk enable boot-start
+
+
+![image](https://github.com/user-attachments/assets/322f83e9-90a3-4e9e-b4d4-09e08d19ff7f)
+
+
+Click enter
+
+![image](https://github.com/user-attachments/assets/b932045c-f586-439d-9c13-f2afd9035922)
+
+
+![image](https://github.com/user-attachments/assets/790d67c5-cc65-4a8a-a2ed-1f52f878cfea)
+
+
+![image](https://github.com/user-attachments/assets/d65bda8a-2255-4231-9d9b-e2914798a31f)
+
+
+Username:: 
+
+![image](https://github.com/user-attachments/assets/a1a5f381-3ded-4291-b779-561b2373e4e1)
+
+
+Password:
+
+![image](https://github.com/user-attachments/assets/a95d259e-b0b6-4299-98e4-c690b057bbf5)
+
+
+![image](https://github.com/user-attachments/assets/2ffcc310-04f3-4e41-b09d-63087230510d)
+
+
+For enabled boost start right for that we need to run below command
+
+>sudo ufw allow openSSH
+
+![image](https://github.com/user-attachments/assets/857857f0-9262-4d83-af93-53097331bfcd)
+
+
+![image](https://github.com/user-attachments/assets/cc881e9c-94c1-454f-a8cc-4a375778c1e8)
+
+
+openSSH means open por 22
+
+enabled port for splunk
+
+>sudo ufw allow 8000
+
+
+![image](https://github.com/user-attachments/assets/0112d03f-4f19-43cc-b27a-0b5d5248fa4c)
+
+
+Check the splunk status
+>sudo ufw status
+
+Inactive, so we need to enabled
+
+
+![image](https://github.com/user-attachments/assets/ab0950ca-af19-439f-bf79-401d208c175d)
+
+
+Enabled splunk
+
+>sudo ufw enable
+
+
+![image](https://github.com/user-attachments/assets/4740cb2b-3ff0-4f2f-a1c9-af5e2bd8af6b)
+
+
+![image](https://github.com/user-attachments/assets/f8ef0cda-91bb-499f-be3b-257c106657f2)
+
+
+Now see openSSH port -22 allowed
+8000 port enabled allowed 
+
+Now we need to start splunk
+>sudo /opt/splunk/bin/splunk start
+
+
+![image](https://github.com/user-attachments/assets/d0593020-69ba-4212-9046-ff69e665593f)
+
+
+![image](https://github.com/user-attachments/assets/37cf9f5e-85b2-442b-9e28-3dcac692605e)
+
+
+Enter user/pwd
+Srinu/Srinu@7358
