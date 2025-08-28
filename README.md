@@ -9151,3 +9151,134 @@ Now we need to start splunk
 
 Enter user/pwd
 Srinu/Srinu@7358
+
+
+
+28/08/2025::
+===========
+
+
+![image](https://github.com/user-attachments/assets/e0313ff9-9ddc-42e6-9e46-6152e40c0a51)
+
+
+![image](https://github.com/user-attachments/assets/12a6cc79-6efa-42eb-a0ea-70d1084d84da)
+
+
+Go Apps----- Find More Apps
+
+![image](https://github.com/user-attachments/assets/e0123b5d-c8eb-42d8-9eff-099b55046509)
+
+
+Splunk App for Jenkins  ----we need to install this app in splunk to integrate with Jenkins
+
+![image](https://github.com/user-attachments/assets/00be0b2e-ba7c-4660-aa40-4ae7e54b8e87)
+
+
+Click install
+Asking UN/PWD
+
+NOTE:: make sure you should provide the UN/PWD is splunk enterprise at the time of create the splunk account right
+
+![image](https://github.com/user-attachments/assets/91c02e5a-9b89-4cdd-8807-34084482a48e)
+
+Click agree & install
+
+![image](https://github.com/user-attachments/assets/fdaaaa1b-a921-40a1-a1d4-195e62da4cc1)
+
+
+![image](https://github.com/user-attachments/assets/ff25f0de-c433-42ae-b6dd-47de03da9a22)
+
+
+![image](https://github.com/user-attachments/assets/9664e7c6-53af-42f2-ada4-4c4d893d128e)
+
+
+Click splunk enterprise
+
+We can see splunk for Jenkins
+
+
+![image](https://github.com/user-attachments/assets/690e9a3f-b577-4f7d-86fc-3c5585d0cc22)
+
+
+Go to settings
+
+![image](https://github.com/user-attachments/assets/ebc01f35-ef98-40a6-ae30-ceb03d7a7e79)
+
+
+Click data inputs
+
+![image](https://github.com/user-attachments/assets/70250ace-d56a-4429-af88-7773f67919c5)
+
+
+![image](https://github.com/user-attachments/assets/f97f0d52-0141-4b1c-bb27-08bf8ccc414b)
+
+
+Click HTTP Event Collector
+
+![image](https://github.com/user-attachments/assets/9250ef52-d8d2-4591-b0ad-4df3b387053b)
+
+
+Click Global settings
+
+![image](https://github.com/user-attachments/assets/5be60128-7a12-4ea7-bb97-fe0915dd95c7)
+
+
+Uncheck
+
+Enable SSL
+
+
+![image](https://github.com/user-attachments/assets/97643fac-bde5-42fc-952b-9dda35662bfe)
+
+
+For integrate with Jenkins we required New token
+
+Click New Token
+
+
+![image](https://github.com/user-attachments/assets/8af2c367-bd84-4f37-af82-b6f2ef917912)
+
+
+Provided name
+
+![image](https://github.com/user-attachments/assets/e900004d-8aa3-426c-b44a-8f86fd472a13)
+
+
+Next
+
+![image](https://github.com/user-attachments/assets/c16959b5-c0cf-4fa9-81b0-d13e5abf8223)
+
+
+Click submit
+
+![image](https://github.com/user-attachments/assets/b045b901-267b-430f-86ba-3fa9e9d5b626)
+
+
+Click start searching
+
+![image](https://github.com/user-attachments/assets/3a51da53-920b-4057-8fde-9183fa0a71b7)
+
+
+Go to setting - Data Inputs –
+
+Get the token value
+
+![image](https://github.com/user-attachments/assets/4b03dc1a-5c78-4796-9865-57c765b7be9f)
+
+
+To integrate with Jenkins, we need to install Splunk plugin in Jenkins
+
+![image](https://github.com/user-attachments/assets/555c1b5c-ba85-4bae-b97e-5ba90118851b)
+
+
+Go to System
+Splunk for Jenkins Configuration
+
+
+![image](https://github.com/user-attachments/assets/72e57b42-64ab-4c2a-9d9b-19bd8dfa8387)
+
+
+![image](https://github.com/user-attachments/assets/3f1e30e1-f3a8-48fc-b818-1bb5c6a9db68)
+
+
+
